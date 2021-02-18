@@ -1,9 +1,14 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "title": "qqq",
+      "author": "www",
+      "id": 1
+    },
+    {
+      "title": "alejonrejn",
+      "author": "www",
+      "id": 2
     }
   ],
   "comments": [
