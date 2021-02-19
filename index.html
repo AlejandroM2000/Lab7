@@ -90,8 +90,17 @@
         fetch(endpoint, {
           method: 'get'
         })
-          .then(response => response.json())
-          .then(data => document.getElementById('output').innerHTML = JSON.stringify(data));
+          .then(function(response){
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+            } else {
+                throw Error(response.statusText);
+            }
+          } )
+          .then(data => document.getElementById('output').innerHTML = JSON.stringify(data))
+          .catch(error =>{
+            document.getElementById('output').innerHTML  = "Network Error: " + error.message;
+          });
       }
 
       // This function should fetch one entry from the given endpoint.
@@ -100,14 +109,23 @@
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchOne() {
         // TODO
-         document.getElementById('recordForm').style.display = "none";
+        document.getElementById('recordForm').style.display = "none";
         let endpoint = document.getElementById('endpoint').value;
         let id = prompt('Enter record id');
         fetch(endpoint + "/" + id, {
           method: 'get'
         })
-          .then(response => response.json())
-          .then(data => document.getElementById('output').innerHTML = JSON.stringify(data));
+          .then(function(response) {
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+            } else {
+                throw Error(response.statusText);
+            }
+          })
+          .then(data => document.getElementById('output').innerHTML = JSON.stringify(data))
+          .catch(error =>{
+            document.getElementById('output').innerHTML  = "Network Error: " + error.message;
+          });
       }
 
       // This function should use fetch to create one entry in the given endpoint.
@@ -116,6 +134,8 @@
       // the writeup to view the URL pattern for create and update
       function createRecord(action) {
         if(action === 'show'){
+          document.getElementById('author').value = '';
+          document.getElementById('title').value = '';
           let recordForm = document.getElementById("recordForm");
           recordForm.style.display = "block";
         } else {
@@ -132,8 +152,17 @@
             body: JSON.stringify(_data),
             headers: {"Content-type": "application/json; charset=UTF-8"}
           })
-          .then(response => response.json()) 
-          .then(json => document.getElementById('output').innerHTML = JSON.stringify(json));
+          .then(function(response){
+            if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+            } else {
+                throw Error(response.statusText);
+            }
+          }) 
+          .then(json => document.getElementById('output').innerHTML = JSON.stringify(json))
+          .catch(error =>{
+            document.getElementById('output').innerHTML  = "Network Error: " + error.message;
+          });
         }
       }
 
@@ -143,6 +172,8 @@
       // the writeup to view the URL pattern for create and update
       function updateRecord(action) {
         if(action === 'show'){
+          document.getElementById('author').value = '';
+          document.getElementById('title').value = '';
           let recordForm = document.getElementById('recordForm');
           let recordId = document.getElementById('recordIDcontainer')
           recordForm.style.display = 'block';
@@ -161,8 +192,17 @@
             headers: {'Content-type': 'application/json; charset=UTF-8'},
             body: JSON.stringify(_data)
           })
-            .then(response =>response.json())
-            .then(json => document.getElementById('output').innerHTML = JSON.stringify(json) );
+            .then(function(response){
+              if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+              } else {
+                throw Error(response.statusText);
+              }
+            })
+            .then(json => document.getElementById('output').innerHTML = JSON.stringify(json))
+            .catch(error =>{
+            document.getElementById('output').innerHTML  = "Network Error: " + error.message;
+          });
           
         }
       }
@@ -179,8 +219,17 @@
           method: 'DELETE',
           headers:{'Content-type': 'application/json; charset=UTF-8'}, // Indicates the content 
         })
-          .then(response => response.json())
-          .then(data => document.getElementById('output').innerHTML = '{}');
+          .then(function(response){
+            if (response.status >= 200 && response.status <= 299) {
+              return response.json();
+            } else {
+              throw Error(response.statusText);
+            }
+          })
+          .then(data => document.getElementById('output').innerHTML = '{}')
+          .catch(error =>{
+            document.getElementById('output').innerHTML  = "Network Error: " + error.message;
+          });
       }
       
 
@@ -233,3 +282,5 @@
     </script>
   </body>
 </html>
+
+
